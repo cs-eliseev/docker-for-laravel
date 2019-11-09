@@ -46,6 +46,27 @@ services:
       context: ${CONFIG_PATH}/nginx
       dockerfile: Dockerfile
 
+  # The Database
+  database:
+    container_name: datebase-container
+    image: mysql:5.7
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ${CONFIG_PATH}/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ${PROJECT_PATH}/logs/mysql:/var/log/mysql
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - TZ=${TZ}
+    ports:
+      - ${DB_PORT}:3306
+    networks:
+        - laravel-network
+
 # Docker Networks
 networks:
   laravel-network:
@@ -54,3 +75,7 @@ networks:
       driver: default
       config:
         - subnet: "192.168.220.0/24"
+
+# Docker Volumes
+volumes:
+  dbdata: {}

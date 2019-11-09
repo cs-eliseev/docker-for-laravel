@@ -25,6 +25,10 @@ services:
         - PHP_VERSION
     environment:
       - TZ=${TZ}
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - QUEUE_DRIVER=redis
+      - REDIS_HOST=redis
       - PHP_VERSION=${PHP_VERSION}
       - XDEBUG_PORT=${XDEBUG_PORT}
 
@@ -67,6 +71,16 @@ services:
     networks:
         - laravel-network
 
+  # Redis service
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    volumes:
+      - redis-store:/data
+      - ${PROJECT_PATH}/logs/redis:/var/log/redis
+    networks:
+      - laravel-network
+
 # Docker Networks
 networks:
   laravel-network:
@@ -79,3 +93,4 @@ networks:
 # Docker Volumes
 volumes:
   dbdata: {}
+  redis-store: {}

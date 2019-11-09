@@ -1,0 +1,38 @@
+version: "3.5"
+
+services:
+  # Application
+  laravel:
+    container_name: laravel-container
+    working_dir: ${WORKING_DIR}
+    volumes:
+      - ${PROJECT_PATH}:${WORKING_DIR}
+#      - ${CONFIG_PATH}/laravel/xdebug.ini:/etc/php/7.3/mods-available/xdebug.ini
+      - ${CONFIG_PATH}/laravel/php.ini:/usr/local/etc/php/php.ini
+      - ${PROJECT_PATH}/logs/laravel:${WORKING_DIR}/storage/logs
+      - ${PROJECT_PATH}/logs/php:/var/log/php
+    ports:
+      - ${APP_PORT}:8000
+    networks:
+      - laravel-network
+    build:
+      context: ${CONFIG_PATH}/laravel
+      dockerfile: Dockerfile
+      args:
+        - USER_ID
+        - GROUP_ID
+        - TZ
+        - PHP_VERSION
+    environment:
+      - TZ=${TZ}
+      - PHP_VERSION=${PHP_VERSION}
+      - XDEBUG_PORT=${XDEBUG_PORT}
+
+# Docker Networks
+networks:
+  laravel-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.220.0/24"

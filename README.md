@@ -1,5 +1,8 @@
 # Laravel To Docker
 
+[![Packagist](https://img.shields.io/packagist/l/cse/helpers-ip.svg?style=flat-square)](https://github.com/cs-eliseev/docker-for-laravel/blob/master/LICENSE.md)
+[![GitHub repo size](https://img.shields.io/github/repo-size/cs-eliseev/docker-for-laravel.svg?style=flat-square)](https://github.com/cs-eliseev/docker-for-laravel/archive/master.zip)
+
 ## Description
 
 Build Laravel's development environment using docker LEMP. 
@@ -203,10 +206,25 @@ src/logs
     docker-compose exec laravel ./vendor/bin/phpunit
     ```
 
-### Create SSL certs
+### Create SSL cert
 
 1. Running OpenSSL command create ssl certs
 
     ```shell
     sudo openssl req -x509 -nodes -days 999999 -newkey rsa:2048 -keyout docker/laravel/nginx/cert/nginx.key -out docker/laravel/nginx/cert/nginx.crt
     ```
+
+## Donating
+
+You can support this project [here](https://www.paypal.me/cseliseev/10usd). 
+You can also help out by contributing to the project, or reporting bugs. 
+Even voicing your suggestions for features is great. Anything to help is much appreciated.
+
+
+## License
+
+The IP CSE HELPERS is open-source PHP library licensed under the MIT license. Please see [License File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/LICENSE.md) for more information.
+
+***
+
+> GitHub [@cs-eliseev](https://github.com/cs-eliseev)

@@ -1,4 +1,7 @@
-# Laravel To Docker
+English | [Русский](https://github.com/cs-eliseev/docker-for-laravel/blob/master/README.ru_RU.md)
+
+DOCKER FOR LARAVEL
+=======
 
 [![Packagist](https://img.shields.io/packagist/l/cse/helpers-ip.svg?style=flat-square)](https://github.com/cs-eliseev/docker-for-laravel/blob/master/LICENSE.md)
 [![GitHub repo size](https://img.shields.io/github/repo-size/cs-eliseev/docker-for-laravel.svg?style=flat-square)](https://github.com/cs-eliseev/docker-for-laravel/archive/master.zip)
@@ -6,7 +9,7 @@
 ## Description
 
 Build Laravel's development environment using docker LEMP. 
-Uses a persistant database store PHP, MySQL, Nginx, Redis
+Uses a persistant database store and stack PHP, MySQL, Redis, Nginx (http, https).
 
 
 ## Info
@@ -34,6 +37,19 @@ src/logs
 ```
 
 ## Usage
+
+### Install
+
+#### Git
+
+Clone this repository locally:
+```bash
+git clone https://github.com/cs-eliseev/docker-for-laravel.git
+```
+
+#### Download
+
+[Download the latest release here](https://github.com/cs-eliseev/docker-for-laravel/archive/master.zip).
 
 ### Install developments tools
 
@@ -106,21 +122,23 @@ src/logs
 
 1. Use project
 
-    http://localhost:5101
+    HTTP - http://localhost:5101
+    
+    HTTPS - https://localhost:5102
 
 ### MySQL connection
 
-1. Get mysql network info in a Docker container
+1. Get MySQL network info in a Docker container
 
     ```shell
     docker inspect datebase-container
     ```
 
-1. Set .env info mysql network
+1. Settings MySQL to Laravel
 
    Edit ```src/.env``` file
 
-    ```env
+    ```text
     DB_CONNECTION=mysql
     DB_HOST=datebase-container
     DB_PORT=3306
@@ -135,15 +153,15 @@ src/logs
     docker-compose exec database bash -c 'mysql -u root -p 123456 laravel_project'
     ```
 
-1. Run Laravel Migration to Docker
+1. Run Laravel Migration to Docker container
 
-    ```
+    ```shell
     docker-compose exec laravel php artisan migrate
     ```
 
-1. Clear database to Docker
+1. Clear database to Docker container
 
-    ```
+    ```shell
     docker-compose down --volumes --rmi all
     docker-compose up -d --build
     docker-compose exec laravel php artisan migrate
@@ -151,9 +169,11 @@ src/logs
 
 ### Redis
 
-1. Set .env info mysql network
+1. Settings Redis to Laravel
 
-    ```.env
+    Edit ```src/.env``` file
+
+    ```text
     REDIS_HOST=redis-container
     REDIS_PASSWORD=null
     REDIS_PORT=6379
@@ -176,7 +196,11 @@ src/logs
 
 ### Use UnitTest
 
-1. Add unit test Laravel db connect to Docker
+PHPUnit is used for unit testing. Unit tests ensure that class and methods does exactly what it is meant to do.
+
+General PHPUnit documentation can be found at https://phpunit.de/documentation.html.
+
+1. Add unit test Laravel application, db connection to Docker container
 
    Create a new PHPUnit Test class ```DbConnectivityTest``` in folder ```src/tests/Feature```
     
@@ -200,7 +224,7 @@ src/logs
     }
     ```
 
-1. Run PHPUnit test to Docker
+1. To run the PHPUnit unit tests, execute in a Docker container:
 
     ```shell
     docker-compose exec laravel ./vendor/bin/phpunit
@@ -223,7 +247,7 @@ Even voicing your suggestions for features is great. Anything to help is much ap
 
 ## License
 
-The IP CSE HELPERS is open-source PHP library licensed under the MIT license. Please see [License File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/LICENSE.md) for more information.
+The DOCKER FOR LARAVEL set of settings and configurations licensed under the MIT license. Please see [License File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/LICENSE.md) for more information.
 
 ***
 

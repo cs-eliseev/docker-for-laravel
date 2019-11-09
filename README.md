@@ -251,6 +251,10 @@ Please see [Git File](https://github.com/cs-eliseev/docker-for-laravel/blob/mast
 
 Please see [Docker File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/docker.md) for information.
 
+### Composer
+
+Please see [Composer File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/composer.md) for information.
+
 
 ## Donating
 

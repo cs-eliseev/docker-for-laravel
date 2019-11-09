@@ -6,6 +6,7 @@ DOCKER FOR LARAVEL
 [![Packagist](https://img.shields.io/packagist/l/cse/helpers-ip.svg?style=flat-square)](https://github.com/cs-eliseev/docker-for-laravel/blob/master/LICENSE.md)
 [![GitHub repo size](https://img.shields.io/github/repo-size/cs-eliseev/docker-for-laravel.svg?style=flat-square)](https://github.com/cs-eliseev/docker-for-laravel/archive/master.zip)
 
+
 ## Описание
 
 Создайте среду разработки Laravel, используя докер LEMP.
@@ -237,6 +238,14 @@ PHPUnit используется для модульного тестирова�
     ```shell
     sudo openssl req -x509 -nodes -days 999999 -newkey rsa:2048 -keyout docker/laravel/nginx/cert/nginx.key -out docker/laravel/nginx/cert/nginx.crt
     ```
+
+
+## Управление проектом
+
+### Git
+
+Для получения информации о работе с git, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/git.md).
+
 
 ## Вклад в общее дело
 

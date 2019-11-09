@@ -28,6 +28,24 @@ services:
       - PHP_VERSION=${PHP_VERSION}
       - XDEBUG_PORT=${XDEBUG_PORT}
 
+  # The Web Server
+  webserver:
+    #image: nginx:1.15
+    container_name: webserver-container
+    working_dir: ${WORKING_DIR}
+    volumes:
+      - ${CONFIG_PATH}/nginx/cert:/etc/nginx/cert
+      - ${PROJECT_PATH}:${WORKING_DIR}
+      - ${PROJECT_PATH}/logs/nginx:/var/log/nginx
+    ports: # (webserver_port:laravel_port)
+      - ${HTTP_PORT}:80   # http port from laravel service
+      - ${HTTPS_PORT}:443  # https port from laravel service
+    networks:
+      - laravel-network
+    build:
+      context: ${CONFIG_PATH}/nginx
+      dockerfile: Dockerfile
+
 # Docker Networks
 networks:
   laravel-network:

@@ -255,6 +255,12 @@ Please see [Docker File](https://github.com/cs-eliseev/docker-for-laravel/blob/m
 
 Please see [Composer File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/composer.md) for information.
 
+### Laravel
+
+Please see [Laravel File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/laravel.md) for information.
+
+Use command to Docker container: ```docker exec -it laravel-container <command>```
+
 
 ## Donating
 

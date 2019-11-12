@@ -261,6 +261,10 @@ Please see [Laravel File](https://github.com/cs-eliseev/docker-for-laravel/blob/
 
 Use command to Docker container: ```docker exec -it laravel-container <command>```
 
+### PHPUnit
+
+Please see [Composer File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpunit.md) for information.
+
 
 ## Donating
 

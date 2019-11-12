@@ -1,9 +1,6 @@
 # Init env
 ARG PHP_VERSION
-ARG USER_ID
-ARG GROUP_ID
 ARG TZ
-ARG XDEBUG_PORT
 
 FROM php:${PHP_VERSION}-fpm
 
@@ -45,7 +42,3 @@ RUN git clone https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis \
     && docker-php-ext-install redis
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
-
-#RUN usermod -u ${USER_ID} www-data \
-#    && groupmod -g ${GROUP_ID} www-data \
-#    && chmod 775 -R storage bootstrap/cache

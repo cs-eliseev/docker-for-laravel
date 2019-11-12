@@ -256,31 +256,31 @@ PHPUnit используется для модульного тестирова�
 
 Для получения информации о работе с Git, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/git.md).
 
-### Docker
+### NPM
 
-Для получения информации о работе с Docker, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/docker.md).
+Для получения информации о работе с NPM, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/npm.md).
 
 ### Composer
 
 Для получения информации о работе с Composer, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/composer.md).
+
+### PHPUnit
+
+Для получения информации о работе с PHPUnit, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpunit.md).
+
+### XDebug
+
+Для получения информации о работе с Xdebug, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/xdebug.md).
+
+### Docker
+
+Для получения информации о работе с Docker, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/docker.md).
 
 ### Laravel
 
 Для получения информации о работе с Laravel, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/laravel.md).
 
 Используйте команды в docker контейнере : ```docker exec -it laravel-container <command>```
-
-### PHPUnit
-
-Для получения информации о работе с PHPUnit, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpunit.md).
-
-### NPM
-
-Для получения информации о работе с NPM, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/npm.md).
-
-### XDebug
-
-Для получения информации о работе с Xdebug, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/xdebug.md).
 
 
 ## Вклад в общее дело

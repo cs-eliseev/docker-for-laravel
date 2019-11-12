@@ -256,31 +256,31 @@ General PHPUnit documentation can be found at https://phpunit.de/documentation.h
 
 Please see [Git File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/git.md) for information.
 
-### Docker
-
-Please see [Docker File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/docker.md) for information.
-
 ### Composer
 
 Please see [Composer File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/composer.md) for information.
+
+### NPM
+
+Please see [NPM File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/npm.md) for information.
+
+### PHPUnit
+
+Please see [PHPUnit File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpunit.md) for information.
+
+### XDebug
+
+Please see [Xdebug File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/xdebug.md) for information.
+
+### Docker
+
+Please see [Docker File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/docker.md) for information.
 
 ### Laravel
 
 Please see [Laravel File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/laravel.md) for information.
 
 Use command to Docker container: ```docker exec -it laravel-container <command>```
-
-### PHPUnit
-
-Please see [PHPUnit File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpunit.md) for information.
-
-### NPM
-
-Please see [NPM File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/npm.md) for information.
-
-### XDebug
-
-Please see [Xdebug File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/xdebug.md) for information.
 
 
 ## Donating

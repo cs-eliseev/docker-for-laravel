@@ -1,19 +1,50 @@
 Laravel
 ====
 
-## Settings
+## PHPStorm plugin Laravel
+
+1. Install plugin Laravel
+    **File — Settings — Plugins**
+
+    Search *Laravel* and install *Laravel Plugin*
+
+1. Enabled plugin Laravel
+    **File — Settings — «Languages & Frameworks» — PHP  — Laravel**
+
+    Set *"Enable plugin for this project"* 
+
+## PHPStorm plugin VueJs
+
+1. Settings VueJs
+    **File — Settings — Plugins**
+    
+    Search *Vue* and install *VueJs*
+    
+## Laravel IDE Helper
+
+1. Install Laravel IDE Helper
+
+    ```shell
+    composer require-dev arryvdh/laravel-ide-helper
+    composer update
+    ```
+
+    Set provider in a ```config/app.php``` file.
+
+    ```php
+    'providers' => [
+        ...,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+    ],
+    ```
 
 1. Init Laravel IDE Helper
 
     ```shell
-    composer require barryvdh/laravel-ide-helper
-    composer update
-    php artisan clear-compiled
     php artisan ide-helper:generate
-    php artisan optimize
     ```
-
-1. Init model Laravel IDE Helper
+    
+1. Init new model
 
     ```shell
     php artisan ide-helper:models

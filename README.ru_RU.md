@@ -20,10 +20,7 @@ DOCKER FOR LARAVEL
 * Laravel приложение HTTP: http://localhost:5101
 * Laravel приложение HTTPS: http://localhost:5102
 * MySQL: http://localhost:5103
-* Redis: http://localhost:5104
-* XDebug: http://localhost:5105
-
-Установлено перенаправление с HTTP на HTTPS.
+* XDebug: http://192.168.220.1:5104
 
 ### Путь к приложению Laravel
 
@@ -36,6 +33,7 @@ src/
 ```
 src/logs
 ```
+
 
 ## Использование
 
@@ -126,6 +124,8 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
     HTTP - http://localhost:5101
 
     HTTPS - https://localhost:5102
+    
+    XDebug - http://192.168.220.1:5104
 
 ### Подключение MySQL
 
@@ -193,6 +193,16 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 
     ```shell
     docker-compose exec redis redis-cli
+    ```
+
+### XDebug
+
+1. Change XDebug config for Mac or Windows
+
+    Change file ```docker/laravelxdebug.ini```
+
+    ```text
+    xdebug.remote_host=host.docker.internal 
     ```
 
 ### Тестирование

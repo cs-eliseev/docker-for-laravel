@@ -20,10 +20,7 @@ Uses a persistant database store and stack PHP, MySQL, Redis, Nginx (http, https
 * Laravel application HTTP: http://localhost:5101
 * Laravel application HTTPS: http://localhost:5102
 * MySQL: http://localhost:5103
-* Redis: http://localhost:5104
-* XDebug: http://localhost:5105
-
-Set redirect from HTTP to HTTPS.
+* XDebug: http://192.168.220.1:5104
 
 ### Laravel project path
 
@@ -127,6 +124,8 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
     HTTP - http://localhost:5101
     
     HTTPS - https://localhost:5102
+    
+    XDebug - http://192.168.220.1:5104
 
 ### MySQL connection
 
@@ -196,6 +195,16 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
     docker-compose exec redis redis-cli
     ```
 
+### XDebug
+
+1. Change XDebug config for Mac or Windows
+
+    Change file ```docker/laravelxdebug.ini```
+
+    ```text
+    xdebug.remote_host=host.docker.internal 
+    ```
+    
 ### Use UnitTest
 
 PHPUnit is used for unit testing. Unit tests ensure that class and methods does exactly what it is meant to do.

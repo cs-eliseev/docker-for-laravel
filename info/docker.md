@@ -3,7 +3,76 @@ Docker
 
 Docker provides a way to run applications securely isolated in a container, packaged with all its dependencies and libraries.
 
-    
+## Docker install
+
+1. Uninstall Old Versions of Docker
+
+    ```shell
+    sudo apt-get remove docker docker-engine docker.io
+    ```
+1. Install Dependency packages
+    ```shell
+    sudo apt-get update
+    sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+    ```
+
+1. Add Docker’s official GPG key
+    ```shell
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    ```
+
+1. Add the Docker repository
+
+    Ubuntu 18.04
+    ```shell
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME") stable"
+    ```
+
+    Mint 19.2
+    ```shell
+    sudo add-apt-repository "deb https://download.docker.com/linux/ubuntu bionic stable"
+    ```
+
+1. Update Repositories
+    ```shell
+    sudo apt-get update
+    ```
+
+1. Install Latest Version of Docker
+
+    ```shell
+    sudo apt-get install docker-ce
+    ```
+
+1. Install Docker Compose
+    ```shell
+    sudo apt-get -y  install docker-compose
+    ```
+
+1.  Add docker user
+
+    ```shell
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    ```
+
+1. Check systemctl
+    ```shell
+    sudo systemctl status docker
+    ```
+
+1. Test run docker container
+    ```shell
+    docker run --rm -it  --name test alpine:latest /bin/sh
+    cat /etc/os-release 
+    exit
+    ```
+
+1. Fix permission denied docker
+    ```shell
+    sudo chmod 666 /var/run/docker.sock
+    ``` 
+
 ## Docker commands
 
 1. Running background docker-compose project
@@ -90,6 +159,17 @@ Docker provides a way to run applications securely isolated in a container, pack
 
     ```shell
     docker images
+    ```
+
+1. Remove Docker images
+
+    ```shell
+    docker image prune
+    ```
+
+1. Remve Docker network
+    ```shell
+    docker network prune
     ```
 
 1. Remove Docker images

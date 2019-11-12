@@ -30,7 +30,7 @@ Composer is a tool for dependency management in PHP.
     composer config -g <+> <token>
     ```
 
-1. Init composer
+1. Init composer project
     ```shell
     composer init
     ```

@@ -264,6 +264,10 @@ PHPUnit используется для модульного тестирова�
 
 Для получения информации о работе с Composer, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/composer.md).
 
+### PHPStan
+
+Для получения информации о работе с PHPStan, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpstan.md).
+
 ### PHPCPD
 
 Для получения информации о работе с PHPCPD, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpcpd.md).

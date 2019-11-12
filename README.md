@@ -264,6 +264,10 @@ Please see [Composer File](https://github.com/cs-eliseev/docker-for-laravel/blob
 
 Please see [NPM File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/npm.md) for information.
 
+### PHPStan
+
+Please see [PHPStan File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpstan.md) for information.
+
 ### PHPCPD
 
 Please see [PHPCPD File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpcpd.md) for information.

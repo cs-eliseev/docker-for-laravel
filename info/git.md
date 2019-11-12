@@ -3,6 +3,7 @@ Git
 
 Version control system
 
+
 ## Git install
 
 1. Install Git on Ubuntu
@@ -16,6 +17,7 @@ Version control system
     ```shell
     git --version
     ``` 
+
 
 ## Configuring Git
 

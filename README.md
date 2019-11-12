@@ -278,6 +278,10 @@ Please see [PHPUnit File](https://github.com/cs-eliseev/docker-for-laravel/blob/
 
 Please see [NPM File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/npm.md) for information.
 
+### XDebug
+
+Please see [Xdebug File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/xdebug.md) for information.
+
 
 ## Donating
 

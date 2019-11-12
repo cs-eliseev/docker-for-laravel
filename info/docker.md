@@ -3,6 +3,7 @@ Docker
 
 Docker provides a way to run applications securely isolated in a container, packaged with all its dependencies and libraries.
 
+
 ## Docker install
 
 1. Uninstall Old Versions of Docker
@@ -72,6 +73,7 @@ Docker provides a way to run applications securely isolated in a container, pack
     ```shell
     sudo chmod 666 /var/run/docker.sock
     ``` 
+
 
 ## Docker commands
 

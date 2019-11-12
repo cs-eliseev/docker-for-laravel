@@ -3,7 +3,8 @@ NPM
 
 NPM is a package manager for the JavaScript programming language.
 
-### NPM install
+
+## NPM install
 
 1. Install Node.js
     ```shell

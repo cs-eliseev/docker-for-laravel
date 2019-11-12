@@ -1,7 +1,7 @@
 Laravel
 ====
 
-### Settings
+## Settings
 
 1. Init Laravel IDE Helper
 
@@ -20,7 +20,7 @@ Laravel
     ```
 
 
-### Laravel command
+## Laravel command
 
 1. Create Laravel model
 

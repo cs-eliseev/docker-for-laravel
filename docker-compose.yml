@@ -2,6 +2,7 @@
 #
 # http://localhost:5101
 # https://localhost:5102
+# xdebug 192.168.220.1:5104
 
 version: "3.5"
 
@@ -12,30 +13,26 @@ services:
     working_dir: ${WORKING_DIR}
     volumes:
       - ${PROJECT_PATH}:${WORKING_DIR}
-#      - ${CONFIG_PATH}/laravel/xdebug.ini:/etc/php/7.3/mods-available/xdebug.ini
+      - ${CONFIG_PATH}/laravel/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
       - ${CONFIG_PATH}/laravel/php.ini:/usr/local/etc/php/php.ini
       - ${PROJECT_PATH}/logs/laravel:${WORKING_DIR}/storage/logs
       - ${PROJECT_PATH}/logs/php:/var/log/php
-    ports:
-      - ${APP_PORT}:8000
+      - ${PROJECT_PATH}/logs/xdebug:/var/log/xdebug/
     networks:
       - laravel-network
     build:
       context: ${CONFIG_PATH}/laravel
       dockerfile: Dockerfile
       args:
-        - USER_ID
-        - GROUP_ID
         - TZ
         - PHP_VERSION
     environment:
-      - TZ=${TZ}
-      - CACHE_DRIVER=redis
-      - SESSION_DRIVER=redis
-      - QUEUE_DRIVER=redis
-      - REDIS_HOST=redis
-      - PHP_VERSION=${PHP_VERSION}
-      - XDEBUG_PORT=${XDEBUG_PORT}
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+      PHP_VERSION: ${PHP_VERSION}
+      PHP_IDE_CONFIG: "serverName=Docker"
 
   # The Web Server
   webserver:
@@ -66,15 +63,14 @@ services:
       - ${CONFIG_PATH}/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ${PROJECT_PATH}/logs/mysql:/var/log/mysql
     environment:
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASS}
-      - MYSQL_ROOT_PASSWORD=${DB_PASS}
-      - TZ=${TZ}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
     ports:
       - ${DB_PORT}:3306
     networks:
-        - laravel-network
+      - laravel-network
 
   # Redis service
   redis:
@@ -93,7 +89,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: "192.168.220.0/24"
+        - subnet: 192.168.220.0/28
 
 # Docker Volumes
 volumes:

@@ -5,7 +5,7 @@ The PHP Coding Standards Fixer (PHP CS Fixer) tool fixes your code to follow sta
 
 ## Install
 
-1. Install CodeSniffer
+1. Install PHP CS Fixer
 
     ```shell
     composer global require friendsofphp/php-cs-fixer

@@ -264,9 +264,13 @@ PHPUnit используется для модульного тестирова�
 
 Для получения информации о работе с Composer, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/composer.md).
 
+### PHPCPD
+
+Для получения информации о работе с PHPCPD, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpcpd.md).
+
 ### PHP CS Fixer
 
-Для получения информации о работе с PHPUnit, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/php-cs-fixer.md).
+Для получения информации о работе с PHP CS Fixer, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/php-cs-fixer.md).
 
 ### PHPUnit
 

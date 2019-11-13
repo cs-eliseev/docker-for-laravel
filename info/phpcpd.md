@@ -14,6 +14,11 @@ Copy and paste detector (CPD) for PHP code. This tool provides details about dup
 
 ## Command
 
+1. Help
+    ```shell
+    phpcpd --help
+    ```
+
 1. Find duplicate
     ```shell
     phpcpd <dir_project>

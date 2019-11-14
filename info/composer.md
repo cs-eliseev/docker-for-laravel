@@ -23,6 +23,22 @@ Composer is a tool for dependency management in PHP.
     sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
     ```
 
+1. Set link global command
+
+    Get constant <home>
+    ```shell
+    composer config --list --global
+    ```
+
+    Set constant <home> in a Path
+    ```shell
+    export PATH="$PATH:<home>/vendor/bin"
+    ```
+
+    Check Path
+    ```shell
+    echo $PATH
+    ```
 
 ## Composer command
 

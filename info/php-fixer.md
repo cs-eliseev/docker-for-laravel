@@ -11,22 +11,6 @@ The PHP Coding Standards Fixer (PHP CS Fixer) tool fixes your code to follow sta
     composer global require friendsofphp/php-cs-fixer
     ```
 
-1. Set link command
-
-    Get constant <home>
-    ```shell
-    composer config --list --global
-    ```
-
-    Set constant <home> in a Path
-    ```shell
-    export PATH="$PATH:<home>/vendor/bin"
-    ```
-
-    Check Path
-    ```shell
-    echo $PATH
-    ```
 1. Create settings
 
     Create file ```src/.php_cs.dist```

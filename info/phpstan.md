@@ -14,7 +14,7 @@ before you run the actual line.
 1. Install PHPStan
 
     ```shell
-    composer require --dev phpstan/phpstan
+    composer global require phpstan/phpstan
     ```
 
 1. First run
@@ -30,7 +30,11 @@ before you run the actual line.
     ```shell
     vendor/bin/phpstan analyse test app
     ```
-    
+
+1. View all list command
+    ```shell
+    vendor/bin/phpstan list
+    ```    
 
 ## Plagein Larastan
 

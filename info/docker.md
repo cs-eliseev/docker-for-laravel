@@ -54,7 +54,10 @@ Docker provides a way to run applications securely isolated in a container, pack
 
     ```shell
     sudo groupadd docker
+    sudo newgrp docker
     sudo usermod -aG docker $USER
+    sudo gpasswd -a ${USER} docker
+    sudo service docker restart
     ```
 
 1. Check systemctl

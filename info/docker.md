@@ -36,25 +36,24 @@ Docker provides a way to run applications securely isolated in a container, pack
 
 1. Update Repositories
     ```shell
-    sudo apt-get update
+    sudo apt-get -y update
     ```
 
 1. Install Latest Version of Docker
 
     ```shell
-    sudo apt-get install docker-ce
+    sudo apt-get -y install docker-ce
     ```
 
 1. Install Docker Compose
     ```shell
-    sudo apt-get -y  install docker-compose
+    sudo apt-get -y install docker-compose
     ```
 
 1.  Add docker user
 
     ```shell
     sudo groupadd docker
-    sudo newgrp docker
     sudo usermod -aG docker $USER
     sudo gpasswd -a ${USER} docker
     sudo service docker restart

@@ -4,6 +4,13 @@ XDebug
 Xdebug is an extension for PHP to assist with debugging and development. It 
 
 
+## Install
+
+1. Install local
+	```shell
+	sudo apt-get -y install php7.3-xdebug
+	```
+
 ## XDebug use in a PHPStorm
 
 1. PHPStorm settings add Build

@@ -6,19 +6,24 @@ NPM is a package manager for the JavaScript programming language.
 
 ## NPM install
 
-1. Install Node.js
+1. Install NodeJS
     ```shell
-    apt install nodejs
+    sudo apt-get -y install nodejs
     ```
 
+1. Check NodeJS version
+    ```shell
+    nodejs -v
+    ```
+	
 1. Install NPM
     ```shell
     apt install npm
     ```
 
-1. Check version
+1. Check NPM version
     ```shell
-    nodejs -v
+    npm -v
     ```
     
 ### NPM command

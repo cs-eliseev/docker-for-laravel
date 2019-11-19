@@ -9,7 +9,7 @@ Composer is a tool for dependency management in PHP.
 1. Install PHP CLI
 
     ```shell
-    sudo apt install php-cli
+    sudo apt-get -y install php-cli
     ```
 
 1. Download composer
@@ -20,7 +20,7 @@ Composer is a tool for dependency management in PHP.
 1. Install Composer
 
     ```shell
-    sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+    php composer-setup.php --install-dir=/usr/local/bin --filename=composer
     ```
 
 1. Set link global command

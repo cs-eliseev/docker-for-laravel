@@ -9,8 +9,8 @@ Version control system
 1. Install Git on Ubuntu
 
     ```shell
-    sudo apt update
-    sudo apt install git
+    sudo apt-get update
+    sudo apt-get -y install git
     ```
 
 1. Check version

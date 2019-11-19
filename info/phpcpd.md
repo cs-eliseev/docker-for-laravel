@@ -8,7 +8,7 @@ Copy and paste detector (CPD) for PHP code. This tool provides details about dup
 1. Install PHPCPD
 
     ```shell
-     sudo apt install phpcpd 
+     sudo apt-get -y install phpcpd
     ```
 
 

@@ -153,6 +153,11 @@ Version control system
     git revert HEAD
     ```
 
+1. Back commit
+    ```shell
+    git reset --hard @~1
+    ```
+
 1. Create new branch
     ```shell
     git checkout -b <branch_name>
@@ -171,6 +176,11 @@ Version control system
 1. Push remote branch
     ```shell
     git push origin <current_branch_name>:<remote_branch_name>
+    ```
+
+1. Push force
+    ```shell
+    git push -f
     ```
 
 1. Delete local branch
@@ -234,6 +244,31 @@ Version control system
     git update-index --no-assume-unchanged <file_name>
     ```
 
+1. Change text editor
+	```shell
+	git config --global core.editor "vim"
+	```
+
+1. Add remote upstream reposytory link
+	```shell
+	git remote add <remoute_local_name> <remoute_project_link>
+	```
+
+1. Pull remote upstream reposytory
+	```shell
+	git fetch <remoute_local_name>
+	```
+
+1. Update master remote upstream reposytory
+	```shell
+	git merge <remoute_local_name>/master
+	```
+
+1. Create pull-request upstream reposytory
+	```shell
+	git push --set-upstream origin <branch_name>
+	```
+
 ## Case
 1. Merge branch to master
 
@@ -246,3 +281,24 @@ Version control system
     git merge <branch_name>
     git push origin master
     ```
+
+1. Back commit remote repository
+
+    ```shell
+    git reset --hard @~1
+    git push -f
+    ```
+
+1. Create pull request origin
+    ```shell
+    git remote add <upstream_name> <remote_repository_path>
+    git fetch <upstream_name>
+    git merge <upstream_name>/master
+    git push --set-upstream origin <branch_name>
+    ```
+
+1. Pull local pull-request
+    ```shell
+    git fetch origin pull/<pull_request_id>/head:<branch_name>
+    git checkout <branch_name>
+    ``` 

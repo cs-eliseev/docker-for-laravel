@@ -93,8 +93,39 @@ Laravel
     php artisan key:generate --show
     ```
 
-1. WebPack running
+1. WebPack watch
 
     ```shell
     npm run watch
+    ```
+
+1. Webpack running dev
+
+    ```shell
+    npm run dev
+    ```
+
+1. Migrate DB
+
+    ```shell
+    php artisan migrate
+    ```
+
+1. Seed DB
+
+    ```shell
+    php artisan db:seed
+    ```
+
+## Fix
+
+1. Error Duck
+    
+    Open ```src/.env```
+    ```shell
+    vi src/.env
+    ```
+
+    ```text
+    APP_ENV=dev
     ```

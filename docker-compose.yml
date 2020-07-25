@@ -1,97 +1,266 @@
-# Run project
-#
-# http://localhost:5101
-# https://localhost:5102
-# xdebug 192.168.220.1:5104
+version: '3'
 
-version: "3.5"
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+volumes:
+  mysql:
+    driver: ${VOLUMES_DRIVER}
 
 services:
-  # Application
-  laravel:
-    container_name: laravel-container
-    working_dir: ${WORKING_DIR}
-    volumes:
-      - ${PROJECT_PATH}:${WORKING_DIR}
-      - ${CONFIG_PATH}/laravel/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
-      - ${CONFIG_PATH}/laravel/php.ini:/usr/local/etc/php/php.ini
-      - ${PROJECT_PATH}/logs/laravel:${WORKING_DIR}/storage/logs
-      - ${PROJECT_PATH}/logs/php:/var/log/php
-      - ${PROJECT_PATH}/logs/xdebug:/var/log/xdebug/
-    networks:
-      - laravel-network
+### Workspace Utilities ##################################
+  workspace:
+    container_name: ${APP_NAME}-workspace
     build:
-      context: ${CONFIG_PATH}/laravel
+      context: ${PATH_CONFIGS}/workspace
       dockerfile: Dockerfile
       args:
-        - TZ
-        - PHP_VERSION
-    environment:
-      CACHE_DRIVER: redis
-      SESSION_DRIVER: redis
-      QUEUE_DRIVER: redis
-      REDIS_HOST: redis
-      PHP_VERSION: ${PHP_VERSION}
-      PHP_IDE_CONFIG: "serverName=Docker"
-
-  # The Web Server
-  webserver:
-    #image: nginx:1.15
-    container_name: webserver-container
-    working_dir: ${WORKING_DIR}
+        - BASE_IMAGE_TAG_PREFIX=${WORKSPACE_BASE_IMAGE_TAG_PREFIX}
+        - LARADOCK_PHP_VERSION=${PHP_VERSION}
+        - PUID=${WORKSPACE_PUID}
+        - PGID=${WORKSPACE_PGID}
+        - TZ=${WORKSPACE_TIMEZONE}
+        - NODE_VERSION=${WORKSPACE_NODE_VERSION}
+        - WORKSPACE_USER=${WORKSPACE_USER}
+        - APP_CODE_PATH_CONTAINER=${APP_CODE_PATH_CONTAINER}
     volumes:
-      - ${CONFIG_PATH}/nginx/cert:/etc/nginx/cert
-      - ${PROJECT_PATH}:${WORKING_DIR}
-      - ${PROJECT_PATH}/logs/nginx:/var/log/nginx
-    ports: # (webserver_port:laravel_port)
-      - ${HTTP_PORT}:80   # http port from laravel service
-      - ${HTTPS_PORT}:443  # https port from laravel service
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
     networks:
-      - laravel-network
+      - frontend
+      - backend
+
+### PHP-FPM ##############################################
+  php-fpm:
+    container_name: ${APP_NAME}-php-fpm
     build:
-      context: ${CONFIG_PATH}/nginx
+      context: ${PATH_DOCKER}/php-fpm
       dockerfile: Dockerfile
-
-  # The Database
-  database:
-    container_name: datebase-container
-    image: mysql:5.7
-    restart: unless-stopped
-    tty: true
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - LARADOCK_PHP_VERSION=${PHP_VERSION}
+        - LARADOCK_PHALCON_VERSION=${PHALCON_VERSION}
+        - INSTALL_BZ2=${PHP_FPM_INSTALL_BZ2}
+        - INSTALL_GMP=${PHP_FPM_INSTALL_GMP}
+        - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
+        - INSTALL_PCOV=${PHP_FPM_INSTALL_PCOV}
+        - INSTALL_PHPDBG=${PHP_FPM_INSTALL_PHPDBG}
+        - INSTALL_BLACKFIRE=${INSTALL_BLACKFIRE}
+        - INSTALL_SSH2=${PHP_FPM_INSTALL_SSH2}
+        - INSTALL_SOAP=${PHP_FPM_INSTALL_SOAP}
+        - INSTALL_XSL=${PHP_FPM_INSTALL_XSL}
+        - INSTALL_SMB=${PHP_FPM_INSTALL_SMB}
+        - INSTALL_IMAP=${PHP_FPM_INSTALL_IMAP}
+        - INSTALL_MONGO=${PHP_FPM_INSTALL_MONGO}
+        - INSTALL_AMQP=${PHP_FPM_INSTALL_AMQP}
+        - INSTALL_CASSANDRA=${PHP_FPM_INSTALL_CASSANDRA}
+        - INSTALL_GEARMAN=${PHP_FPM_INSTALL_GEARMAN}
+        - INSTALL_MSSQL=${PHP_FPM_INSTALL_MSSQL}
+        - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
+        - INSTALL_PHPREDIS=${PHP_FPM_INSTALL_PHPREDIS}
+        - INSTALL_MEMCACHED=${PHP_FPM_INSTALL_MEMCACHED}
+        - INSTALL_OPCACHE=${PHP_FPM_INSTALL_OPCACHE}
+        - INSTALL_EXIF=${PHP_FPM_INSTALL_EXIF}
+        - INSTALL_AEROSPIKE=${PHP_FPM_INSTALL_AEROSPIKE}
+        - INSTALL_OCI8=${PHP_FPM_INSTALL_OCI8}
+        - INSTALL_MYSQLI=${PHP_FPM_INSTALL_MYSQLI}
+        - INSTALL_PGSQL=${PHP_FPM_INSTALL_PGSQL}
+        - INSTALL_PG_CLIENT=${PHP_FPM_INSTALL_PG_CLIENT}
+        - INSTALL_POSTGIS=${PHP_FPM_INSTALL_POSTGIS}
+        - INSTALL_INTL=${PHP_FPM_INSTALL_INTL}
+        - INSTALL_GHOSTSCRIPT=${PHP_FPM_INSTALL_GHOSTSCRIPT}
+        - INSTALL_LDAP=${PHP_FPM_INSTALL_LDAP}
+        - INSTALL_PHALCON=${PHP_FPM_INSTALL_PHALCON}
+        - INSTALL_SWOOLE=${PHP_FPM_INSTALL_SWOOLE}
+        - INSTALL_TAINT=${PHP_FPM_INSTALL_TAINT}
+        - INSTALL_IMAGE_OPTIMIZERS=${PHP_FPM_INSTALL_IMAGE_OPTIMIZERS}
+        - INSTALL_IMAGEMAGICK=${PHP_FPM_INSTALL_IMAGEMAGICK}
+        - INSTALL_CALENDAR=${PHP_FPM_INSTALL_CALENDAR}
+        - INSTALL_FAKETIME=${PHP_FPM_INSTALL_FAKETIME}
+        - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
+        - INSTALL_APCU=${PHP_FPM_INSTALL_APCU}
+        - INSTALL_CACHETOOL=${PHP_FPM_INSTALL_CACHETOOL}
+        - INSTALL_YAML=${PHP_FPM_INSTALL_YAML}
+        - INSTALL_RDKAFKA=${PHP_FPM_INSTALL_RDKAFKA}
+        - INSTALL_GETTEXT=${PHP_FPM_INSTALL_GETTEXT}
+        - INSTALL_ADDITIONAL_LOCALES=${PHP_FPM_INSTALL_ADDITIONAL_LOCALES}
+        - INSTALL_MYSQL_CLIENT=${PHP_FPM_INSTALL_MYSQL_CLIENT}
+        - INSTALL_PING=${PHP_FPM_INSTALL_PING}
+        - INSTALL_SSHPASS=${PHP_FPM_INSTALL_SSHPASS}
+        - INSTALL_MAILPARSE=${PHP_FPM_INSTALL_MAILPARSE}
+        - INSTALL_PCNTL=${PHP_FPM_INSTALL_PCNTL}
+        - ADDITIONAL_LOCALES=${PHP_FPM_ADDITIONAL_LOCALES}
+        - INSTALL_FFMPEG=${PHP_FPM_FFMPEG}
+        - INSTALL_WKHTMLTOPDF=${PHP_FPM_INSTALL_WKHTMLTOPDF}
+        - INSTALL_XHPROF=${PHP_FPM_INSTALL_XHPROF}
+        - PUID=${PHP_FPM_PUID}
+        - PGID=${PHP_FPM_PGID}
+        - LOCALE=${PHP_FPM_DEFAULT_LOCALE}
+        - http_proxy
+        - https_proxy
+        - no_proxy
     volumes:
-      - dbdata:/var/lib/mysql
-      - ${CONFIG_PATH}/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ${PROJECT_PATH}/logs/mysql:/var/log/mysql
+      - ${PATH_DOCKER}/php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - ${PATH_LOGS}/laravel:${APP_CODE_PATH_CONTAINER}/storage/logs
+      - ${PATH_LOGS}/php:/var/log/php
+      - ${PATH_LOGS}/xdebug:/var/log/xdebug
+    expose:
+      - "${NGINX_PHP_UPSTREAM_PORT}"
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
     environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASS}
-      MYSQL_ROOT_PASSWORD: ${DB_PASS}
-    ports:
-      - ${DB_PORT}:3306
+      - FAKETIME=${PHP_FPM_FAKETIME}
     networks:
-      - laravel-network
+      - backend
 
-  # Redis service
-  redis:
-    image: redis:latest
-    container_name: redis-container
+### NGINX Server #########################################
+  nginx:
+    container_name: ${APP_NAME}-nginx
+    build:
+      context: ${PATH_DOCKER}/nginx
+      dockerfile: Dockerfile
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
+        - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
+        - http_proxy
+        - https_proxy
+        - no_proxy
     volumes:
-      - redis-store:/data
-      - ${PROJECT_PATH}/logs/redis:/var/log/redis
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - ${PATH_LOGS}/nginx:/var/log/nginx
+      - ${PATH_CONFIGS}/nginx/sites:/etc/nginx/sites-available
+      - ${PATH_CONFIGS}/nginx/ssl:/etc/nginx/ssl
+    ports:
+      - "${NGINX_HOST_HTTP_PORT}:80"
+      - "${NGINX_HOST_HTTPS_PORT}:443"
+    depends_on:
+      - php-fpm
     networks:
-      - laravel-network
+      - frontend
+      - backend
 
-# Docker Networks
-networks:
-  laravel-network:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.220.0/28
+### MySQL ################################################
+  mysql:
+    container_name: ${APP_NAME}-mysql
+    build:
+      context: ${PATH_DOCKER}/mysql
+      dockerfile: Dockerfile
+      args:
+        - MYSQL_VERSION=${MYSQL_VERSION}
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${WORKSPACE_TIMEZONE}
+    volumes:
+      - ~/.docker_${APP_NAME}/mysql:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT}:3306"
+    depends_on:
+      - php-fpm
+    networks:
+      - backend
 
-# Docker Volumes
-volumes:
-  dbdata: {}
-  redis-store: {}
+### Redis ################################################
+  redis:
+    container_name: ${APP_NAME}-redis
+    build:
+      context: ${PATH_DOCKER}/redis
+      dockerfile: Dockerfile
+    volumes:
+      - ~/.docker_${APP_NAME}/redis:/data
+      - ${PATH_LOGS}/redis:/var/log/redis
+    ports:
+      - "${REDIS_PORT}:6379"
+    depends_on:
+      - php-fpm
+    networks:
+      - backend
+
+### Memcached ############################################
+  memcached:
+    container_name: ${APP_NAME}-memcached
+    build:
+      context: ${PATH_DOCKER}/memcached
+      dockerfile: Dockerfile
+    volumes:
+      - ~/.docker_${APP_NAME}/memcached:/var/lib/memcached
+    ports:
+      - "${MEMCACHED_HOST_PORT}:11211"
+    depends_on:
+      - php-fpm
+    networks:
+      - backend
+
+### Laravel Horizon ############################################
+  horizon:
+    container_name: ${APP_NAME}-horizon
+    build:
+      context: ${PATH_DOCKER}/laravel-horizon
+      dockerfile: Dockerfile
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - LARADOCK_PHP_VERSION=${PHP_VERSION}
+        - INSTALL_BZ2=${LARAVEL_HORIZON_INSTALL_BZ2}
+        - INSTALL_GD=${LARAVEL_HORIZON_INSTALL_GD}
+        - INSTALL_GMP=${LARAVEL_HORIZON_INSTALL_GMP}
+        - INSTALL_PGSQL=${PHP_FPM_INSTALL_PGSQL}
+        - INSTALL_ZIP_ARCHIVE=${LARAVEL_HORIZON_INSTALL_ZIP_ARCHIVE}
+        - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
+        - INSTALL_MEMCACHED=${PHP_FPM_INSTALL_MEMCACHED}
+        - INSTALL_SOCKETS=${LARAVEL_HORIZON_INSTALL_SOCKETS}
+        - INSTALL_YAML=${LARAVEL_HORIZON_INSTALL_YAML}
+        - INSTALL_CASSANDRA=${PHP_FPM_INSTALL_CASSANDRA}
+        - INSTALL_PHPREDIS=${LARAVEL_HORIZON_INSTALL_PHPREDIS}
+        - INSTALL_MONGO=${LARAVEL_HORIZON_INSTALL_MONGO}
+        - INSTALL_FFMPEG=${LARAVEL_HORIZON_INSTALL_FFMPEG}
+        - PUID=${LARAVEL_HORIZON_PUID}
+        - PGID=${LARAVEL_HORIZON_PGID}
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+      - ${PATH_CONFIGS}/laravel-horizon/supervisord.d:/etc/supervisord.d
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+    depends_on:
+      - php-fpm
+    networks:
+      - backend
+
+
+### Laravel Echo Server #######################################
+  echo-server:
+    container_name: ${APP_NAME}-echo-server
+    build:
+      context: ${PATH_DOCKER}/laravel-echo-server
+      dockerfile: Dockerfile
+    volumes:
+      - ${PATH_CONFIGS}/laravel-echo-server/laravel-echo-server.json:/app/laravel-echo-server.json
+    ports:
+      - "${LARAVEL_ECHO_SERVER_PORT}:6001"
+    depends_on:
+      - php-fpm
+    links:
+      - redis
+    networks:
+      - frontend
+      - backend
+
+### Mailhog ################################################
+  mailhog:
+    container_name: ${APP_NAME}-mailhog
+    build:
+      context: ${PATH_DOCKER}/mailhog
+      dockerfile: Dockerfile
+    ports:
+      - "${MAILHOG_SMTP_PORT}:1025"
+      - "${MAILHOG_HTTP_PORT}:8025"
+    depends_on:
+      - php-fpm
+    networks:
+      - frontend
+      - backend

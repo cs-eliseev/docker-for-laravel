@@ -27,6 +27,7 @@ services:
         - WORKSPACE_USER=${WORKSPACE_USER}
         - APP_CODE_PATH_CONTAINER=${APP_CODE_PATH_CONTAINER}
     volumes:
+      - ${PATH_CONFIGS}/php-worker/supervisord.d:/etc/supervisord.d
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
     networks:
       - frontend
@@ -182,18 +183,46 @@ services:
     networks:
       - backend
 
-### Memcached ############################################
-  memcached:
-    container_name: ${APP_NAME}-memcached
+### PHP Worker ############################################
+  php-worker:
+    container_name: ${APP_NAME}-php-worker
     build:
-      context: ${PATH_DOCKER}/memcached
+      context: ${PATH_DOCKER}/php-worker
       dockerfile: Dockerfile
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - LARADOCK_PHP_VERSION=${PHP_VERSION}
+        - PHALCON_VERSION=${PHALCON_VERSION}
+        - INSTALL_BZ2=${PHP_WORKER_INSTALL_BZ2}
+        - INSTALL_GD=${PHP_WORKER_INSTALL_GD}
+        - INSTALL_IMAGEMAGICK=${PHP_WORKER_INSTALL_IMAGEMAGICK}
+        - INSTALL_GMP=${PHP_WORKER_INSTALL_GMP}
+        - INSTALL_PGSQL=${PHP_WORKER_INSTALL_PGSQL}
+        - INSTALL_BCMATH=${PHP_WORKER_INSTALL_BCMATH}
+        - INSTALL_OCI8=${PHP_WORKER_INSTALL_OCI8}
+        - INSTALL_PHALCON=${PHP_WORKER_INSTALL_PHALCON}
+        - INSTALL_SOAP=${PHP_WORKER_INSTALL_SOAP}
+        - INSTALL_ZIP_ARCHIVE=${PHP_WORKER_INSTALL_ZIP_ARCHIVE}
+        - INSTALL_MYSQL_CLIENT=${PHP_WORKER_INSTALL_MYSQL_CLIENT}
+        - INSTALL_AMQP=${PHP_WORKER_INSTALL_AMQP}
+        - INSTALL_CASSANDRA=${PHP_WORKER_INSTALL_CASSANDRA}
+        - INSTALL_GEARMAN=${PHP_WORKER_INSTALL_GEARMAN}
+        - INSTALL_GHOSTSCRIPT=${PHP_WORKER_INSTALL_GHOSTSCRIPT}
+        - INSTALL_SWOOLE=${PHP_WORKER_INSTALL_SWOOLE}
+        - INSTALL_TAINT=${PHP_WORKER_INSTALL_TAINT}
+        - INSTALL_FFMPEG=${PHP_WORKER_INSTALL_FFMPEG}
+        - INSTALL_REDIS=${PHP_WORKER_INSTALL_REDIS}
+        - INSTALL_IMAP=${PHP_WORKER_INSTALL_IMAP}
+        - INSTALL_XMLRPC=${PHP_WORKER_INSTALL_XMLRPC}
+        - PUID=${PHP_WORKER_PUID}
+        - PGID=${PHP_WORKER_PGID}
     volumes:
-      - ~/.docker_${APP_NAME}/memcached:/var/lib/memcached
-    ports:
-      - "${MEMCACHED_HOST_PORT}:11211"
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - ${PATH_CONFIGS}/php-worker/supervisord.d:/etc/supervisord.d
     depends_on:
-      - php-fpm
+      - workspace
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
     networks:
       - backend
 

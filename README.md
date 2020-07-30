@@ -10,28 +10,49 @@ DOCKER FOR LARAVEL
 ## Description
 
 Build Laravel's development environment using docker LEMP. 
-Uses a persistant database store and stack PHP, MySQL, Redis, Nginx (http, https).
+Uses a stack PHP, MySQL, Redis, Nginx.
 
 
 ## Info
 
 ### Project link
 
-* Laravel application HTTP: http://localhost:5101
-* Laravel application HTTPS: http://localhost:5102
-* MySQL: http://localhost:5103
-* XDebug: http://192.168.220.1:5104
+* Laravel application: http://localhost:6001
+* Mailhog: http://localhost:6006
+
+|Service|Port|
+|:---|:---:|
+|EchoServer|6001|
+|HTTP|6002|
+|MySQL|6004|
+|SMPT|6005|
+|MAILHOG|6006|
+|Redis|6007|
+|XDebug|9000|
+
+### Docker containers
+
+|Service|Container name|
+|:---|:---:|
+|Aplication|laravel-workspace|
+|Nginx|laravel-nginx|
+|PHP-FPM|laravel-php-fpm|
+|MySQL|laravel-mysql|
+|Redis|laravel-redis|
+|LaravelHorizon|laravel-horizon|
+|EchoServer|laravel-echo-server|
+|MAILHOG|laravel-mailhog|
 
 ### Laravel project path
 
 ```
-src/
+./src
 ```
 
 ### Logs path
 
 ```
-src/logs
+./logs
 ```
 
 
@@ -71,40 +92,10 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 
 ### Build application
 
-1. Go to the Laravel project
+1. Import dependency
 
     ```shell
-    cd src
-    ```
-
-1. Add composer Laravel dependency
-
-    ```shell
-    composer require predis/predis
-    ```
-
-1. Update Composer Laravel dependency
-
-    ```shell
-    composer update
-    ```
-
-1. Install NPM Larave dependency
-
-    ```shell
-    npm i
-    ```
-
-1. Add needs write permissions to Laravel project
-
-    ```shell
-    sudo chmod 777 -R storage bootstrap/cache
-    ```
-
-1. Add group to Laravel project
-
-    ```shell
-    sudo chown -R 1000:1000 storage bootstrap/cache
+    git clone https://github.com/laradock/laradock.git docker
     ```
 
 1. Build all Docker containers
@@ -113,19 +104,19 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
     docker-compose up --build
     ```
 
-1. Create Laravel application key
+1. Build dependency
 
     ```shell
-    docker exec -it laravel-container php artisan key:generate
+    docker exec laravel-workspace bash -c 'npm i --no-bin-links && composer require laravel/horizon && composer require predis/predis && composer update && php artisan key:generate && php artisan horizon:install'
     ```
 
-1. Use project
+### Laravel
 
-    HTTP - http://localhost:5101
-    
-    HTTPS - https://localhost:5102
-    
-    XDebug - http://192.168.220.1:5104
+1. Example laravel config
+
+    ```shell script
+    cat .env.laravel_example
+    ```
 
 ### MySQL connection
 
@@ -141,31 +132,11 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 
     ```text
     DB_CONNECTION=mysql
-    DB_HOST=datebase-container
+    DB_HOST=database-container
     DB_PORT=3306
     DB_DATABASE=laravel_project
     DB_USERNAME=root
     DB_PASSWORD=123456
-    ```
-
-1. Use MySQL in a Docker container
-
-    ```shell
-    docker-compose exec database bash -c 'mysql -u root -p 123456 laravel_project'
-    ```
-
-1. Run Laravel Migration to Docker container
-
-    ```shell
-    docker-compose exec laravel php artisan migrate
-    ```
-
-1. Clear database to Docker container
-
-    ```shell
-    docker-compose down --volumes --rmi all
-    docker-compose up -d --build
-    docker-compose exec laravel php artisan migrate
     ```
 
 ### Redis
@@ -175,34 +146,10 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
     Edit ```src/.env``` file
 
     ```text
+    REDIS_CLIENT=predis
     REDIS_HOST=redis-container
     REDIS_PASSWORD=null
     REDIS_PORT=6379
-    ```
-
-1. Test Redis
-
-    ```shell
-    docker-compose exec laravel php artisan tinker
-    Illuminate\Support\Facades\Redis::set('name', 'hoge');
-    Illuminate\Support\Facades\Redis::get('name');
-    exit
-    ```
-
-1. Use Redis cli
-
-    ```shell
-    docker-compose exec redis redis-cli
-    ```
-
-### XDebug
-
-1. Change XDebug config for Mac or Windows
-
-    Change file ```docker/laravelxdebug.ini```
-
-    ```text
-    xdebug.remote_host=host.docker.internal 
     ```
     
 ### Use UnitTest

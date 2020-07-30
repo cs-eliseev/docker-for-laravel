@@ -8,6 +8,9 @@ ENV APP_CODE_PATH_CONTAINER ${APP_CODE_PATH_CONTAINER}
 ARG WORKSPACE_USER=laradock
 ENV WORKSPACE_USER ${WORKSPACE_USER}
 
+USER ${WORKSPACE_USER}
+
+COPY ./ConnectServicesTests ${APP_CODE_PATH_CONTAINER}/tests
 
 # Start as root
 USER root
@@ -68,26 +71,28 @@ ENV NVM_DIR /home/${WORKSPACE_USER}/.nvm
 
 # Install nvm (A Node Version Manager)
 RUN mkdir -p $NVM_DIR && \
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
-        && . $NVM_DIR/nvm.sh \
-        && nvm install ${NODE_VERSION} \
-        && nvm use ${NODE_VERSION} \
-        && nvm alias default ${NODE_VERSION} \
-        && nvm use default \
-        && echo "" >> ~/.bashrc \
-        && echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc \
-        && echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash && \
+        . $NVM_DIR/nvm.sh && \
+        nvm install ${NODE_VERSION} && \
+        nvm use ${NODE_VERSION} && \
+        nvm alias default ${NODE_VERSION} && \
+        nvm use default &&\
+        npm install --global cross-env && \
+        echo "" >> ~/.bashrc && \
+        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
+        echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc
 
 USER root
 
-RUN echo "" >> ~/.bashrc \
-	&& echo 'export NVM_DIR="${NVM_DIR}"' >> ~/.bashrc \
-	&& echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc
+RUN echo "" >> ~/.bashrc && \
+	echo 'export NVM_DIR="${NVM_DIR}"' >> ~/.bashrc && \
+	echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc
 
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 
 RUN ln -s $NVM_DIR/versions/node/v$NODE_VERSION/bin/node /usr/local/bin/node && \
-    ln -s $NVM_DIR/versions/node/v$NODE_VERSION/bin/npm /usr/local/bin/npm
+    ln -s $NVM_DIR/versions/node/v$NODE_VERSION/bin/npm /usr/local/bin/npm && \
+    npm install --global cross-env
 
 ###########################################################################
 # xDebug:

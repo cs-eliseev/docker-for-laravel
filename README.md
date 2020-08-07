@@ -107,7 +107,7 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 1. Build dependency
 
     ```shell
-    docker exec laravel-workspace bash -c 'npm i --no-bin-links && composer require laravel/horizon && composer require predis/predis && composer update && php artisan key:generate && php artisan horizon:install'
+    docker exec laravel-workspace bash -c 'npm i --no-bin-links && composer require laravel/horizon && composer require predis/predis && composer update && php artisan key:generate && php artisan horizon:install && php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"'
     ```
 
 ### Laravel

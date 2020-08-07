@@ -25,6 +25,7 @@ ENV PUID ${PUID}
 ARG PGID=1000
 ENV PGID ${PGID}
 
+
 # always run apt update when start and after add new source list, then clean up at end.
 RUN set -xe; \
     apt-get update -yqq && \
@@ -37,6 +38,8 @@ RUN set -xe; \
       libzip-dev zip unzip \
       # Install the zip extension
       php${LARADOCK_PHP_VERSION}-zip \
+      php${LARADOCK_PHP_VERSION}-bz2 \
+      libxml2-dev php${LARADOCK_PHP_VERSION}-soap \
       php -m | grep -q 'zip'
 
 
@@ -109,6 +112,34 @@ COPY ./xdebug.ini /etc/php/${LARADOCK_PHP_VERSION}/cli/conf.d/xdebug.ini
 RUN sed -i "s/xdebug.remote_autostart=0/xdebug.remote_autostart=1/" /etc/php/${LARADOCK_PHP_VERSION}/cli/conf.d/xdebug.ini && \
     sed -i "s/xdebug.remote_enable=0/xdebug.remote_enable=1/" /etc/php/${LARADOCK_PHP_VERSION}/cli/conf.d/xdebug.ini && \
     sed -i "s/xdebug.cli_color=0/xdebug.cli_color=1/" /etc/php/${LARADOCK_PHP_VERSION}/cli/conf.d/xdebug.ini
+
+###########################################################################
+# YARN:
+###########################################################################
+
+USER ${WORKSPACE_USER}
+
+ARG YARN_VERSION=latest
+ENV YARN_VERSION ${YARN_VERSION}
+
+RUN . $NVM_DIR/nvm.sh && \
+    if [ ${YARN_VERSION} = "latest" ]; then \
+        curl -o- -L https://yarnpkg.com/install.sh | bash; \
+    else \
+        curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version ${YARN_VERSION}; \
+    fi && \
+    echo "" >> ~/.bashrc && \
+    echo 'export PATH="$HOME/.yarn/bin:$PATH"' >> ~/.bashrc
+
+# Add YARN binaries to root's .bashrc
+USER root
+
+RUN echo "" >> ~/.bashrc && \
+    echo 'export YARN_DIR="/home/laradock/.yarn"' >> ~/.bashrc && \
+    echo 'export PATH="$YARN_DIR/bin:$PATH"' >> ~/.bashrc
+
+# Add PATH for YARN
+ENV PATH $PATH:/home/laradock/.yarn/bin
 
 #
 #--------------------------------------------------------------------------

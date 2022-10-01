@@ -26,6 +26,7 @@ DOCKER FOR LARAVEL
 |Redis WebUI|6007|
 |Echo Server|7102|
 |Socket|7103|
+|Mailhog|8025|
 |XDebug|9003|
 |Swagger Editor|5151|
 |Swagger WebUI|5555|
@@ -119,12 +120,13 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 |PHP-FPM|laravel-php-fpm|
 |Cron|laravel-cron|
 |Horizon|laravel-horizon|
-|Soketi|laravel-socket|
 |MySQL|laravel-mysql|
 |Mongo|laravel-mongo|
 |Redis|laravel-redis|
 |Memcached|laravel-memcached|
 |Laravel Echo Server|laravel-echo|
+|Soketi|laravel-socket|
+|Mailhog|laravel-mailhog|
 |Redis WebUI|laravel-redis-ui|
 |Swagger WebUI|laravel-swagger-ui|
 |Swagger Editor|laravel-swagger-editor|
@@ -160,6 +162,8 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 |LARAVEL_ECHO_SERVER_PORT|Порт Laravel Echo Server|
 |SOKETI_PORT|Порт Soketi|
 |SOKETI_METRICS_SERVER_PORT|Порт вебинтерфейса Soketi|
+|MAILHOG_SMTP_PORT|Mailhog smtp port|
+|MAILHOG_HTTP_PORT|Mailhog http port|
 |SWAGGER_UI_PORT|Порт вебинтерфейса Swagger|
 |SWAGGER_EDITOR_PORT|Порт редактора Swagger|
 |REDIS_WEBUI_PORT|Порт вебинтерфейса Redis|

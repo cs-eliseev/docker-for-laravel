@@ -466,6 +466,17 @@ services:
       - frontend
       - backend
 
+  ### Mailhog ################################################
+  mailhog:
+    container_name: ${APP_NAME}-mailhog
+    build: ${PATH_DOCKER}/mailhog
+    ports:
+      - "${MAILHOG_SMTP_PORT}:1025"
+      - "${MAILHOG_HTTP_PORT}:8025"
+    networks:
+      - frontend
+      - backend
+
   ### REDISWEBUI ################################################
   redis-webui:
     container_name: ${APP_NAME}-redis-ui

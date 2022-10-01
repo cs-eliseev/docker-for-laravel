@@ -9,35 +9,26 @@ DOCKER FOR LARAVEL
 
 ## Description
 
-Build Laravel's development environment using docker LEMP. 
-Uses a persistant database store and stack PHP, MySQL, Redis, Nginx (http, https).
+Simple environment for laravel project, based on laradock.
 
+### External ports
 
-## Info
+* Laravel application: http://localhost
 
-### Project link
-
-* Laravel application HTTP: http://localhost:5101
-* Laravel application HTTPS: http://localhost:5102
-* MySQL: http://localhost:5103
-* XDebug: http://192.168.220.1:5104
-
-### Laravel project path
-
-```
-src/
-```
-
-### Logs path
-
-```
-src/logs
-```
-
+|Service|Port|
+|:---|:---:|
+|HTTP|80|
+|HTTPS|443|
+|Redis WebUI|6007|
+|Echo Server|7102|
+|Socket|7103|
+|XDebug|9003|
+|Swagger Editor|5151|
+|Swagger WebUI|5555|
 
 ## Usage
 
-### Install
+### I - Install
 
 #### Git
 
@@ -50,257 +41,174 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 
 [Download the latest release here](https://github.com/cs-eliseev/docker-for-laravel/archive/master.zip).
 
-### Install developments tools
+### II - Install Docker
 
 * Install [docker](https://docs.docker.com/engine/installation/)
 * Install [docker-compose](https://docs.docker.com/compose/install/)
 
-### Create laravel project
+### III - Import dependency
 
-1. Create a new Laravel project to Docker
+1. Import laradock
+
+   ```shell
+   git clone https://github.com/laradock/laradock.git docker
+   ```
+
+### VI - Import laravel project
+
+1. Import example project: laravel for docker
+
+   ```shell
+   git clone https://github.com/cs-eliseev/laravel-for-docker-example.git src
+   ```
+
+2. Create a new Laravel project to Docker
 
     ```shell
     composer create-project --prefer-dist laravel/laravel src
     ```
 
-1. Git clone project to Docker
+3. Git clone project to Docker
 
     ```shell
     git clone <link> src
     ```
 
-### Build application
+### V - BUILD
+
+   ```shell
+   docker-composer up -d --build
+   ```
+
+## Пути
+
+1. Laravel project path
+```
+./src
+```
+
+2. Environment path
+```
+.env
+```
+
+3. Logs path
+
+```
+./logs
+```
+
+4. Laradock containers path
+
+```
+./dockers
+```
+
+5. Containers settings path
+
+```
+./configs
+```
+
+## Docker containers
+
+|Service|Container name|
+|:---|:---:|
+|Application|laravel-workspace|
+|Nginx|laravel-nginx|
+|PHP-FPM|laravel-php-fpm|
+|Cron|laravel-cron|
+|Horizon|laravel-horizon|
+|Soketi|laravel-socket|
+|MySQL|laravel-mysql|
+|Mongo|laravel-mongo|
+|Redis|laravel-redis|
+|Memcached|laravel-memcached|
+|Laravel Echo Server|laravel-echo|
+|Redis WebUI|laravel-redis-ui|
+|Swagger WebUI|laravel-swagger-ui|
+|Swagger Editor|laravel-swagger-editor|
+
+## Settings
+
+All settings in the file `.env`
+
+### General settings:
+
+|Key|Info|
+|:---|:---|
+|APP_NAME|Application name|
+|PATH_DOCKER|Laradock files path|
+|PATH_CONFIGS|Containers config path|
+|PATH_LOGS|Containers log path|
+|DATA_PATH_HOST|Containers data path|
+|APP_CODE_PATH_HOST|Application path|
+|APP_CODE_PATH_CONTAINER|Container application path|
+|PHP_VERSION|PHP version|
+
+### Ports settings:
+
+|Key|Info|
+|:---|:---|
+|NGINX_HOST_HTTP_PORT|HTTP port|
+|NGINX_HOST_HTTPS_PORT|HTTPS port|
+|NGINX_PHP_UPSTREAM_PORT|Nginx upstream port|
+|MYSQL_PORT|Mysql port|
+|REDIS_PORT|Redis port|
+|MEMCACHED_HOST_PORT|Memcached port|
+|MONGODB_PORT|MongoDB port|
+|LARAVEL_ECHO_SERVER_PORT|Echo server port|
+|SOKETI_PORT|Soketi port|
+|SOKETI_METRICS_SERVER_PORT|Soketi metrics port|
+|SWAGGER_UI_PORT|Swagger WebUI port|
+|SWAGGER_EDITOR_PORT|Swagger editor port|
+|REDIS_WEBUI_PORT|Redis WebUI port|
+|REDIS_WEBUI_CONNECT_PORT|Redis WebUI connect port|
+|PHP_FPM_XDEBUG_PORT|XDebug port|
+
+## Container commands
+
+1. Build container
+
+   ```shell
+   docker-composer up -d --build
+   ```
+
+2. Star containers
 
-1. Go to the Laravel project
+   ```shell
+   docker-composer start
+   ```
 
-    ```shell
-    cd src
-    ```
+3. Stop containers
 
-1. Add composer Laravel dependency
+   ```shell
+   docker-composer stop
+   ```
 
-    ```shell
-    composer require predis/predis
-    ```
+4. Show run containers
 
-1. Update Composer Laravel dependency
+   ```shell
+   docker ps
+   ```
 
-    ```shell
-    composer update
-    ```
+5. Show all containers
 
-1. Install NPM Larave dependency
+   ```shell
+   docker ps -a
+   ```
 
-    ```shell
-    npm i
-    ```
+6. Connect application container
 
-1. Add needs write permissions to Laravel project
+   ```shell
+   docker exec -it laravel-workspace bash
+   ```
 
-    ```shell
-    sudo chmod 777 -R storage bootstrap/cache
-    ```
+7. Docker logs
 
-1. Add group to Laravel project
-
-    ```shell
-    sudo chown -R 1000:1000 storage bootstrap/cache
-    ```
-
-1. Build all Docker containers
-
-    ```shell
-    docker-compose up --build
-    ```
-
-1. Create Laravel application key
-
-    ```shell
-    docker exec -it laravel-container php artisan key:generate
-    ```
-
-1. Use project
-
-    HTTP - http://localhost:5101
-    
-    HTTPS - https://localhost:5102
-    
-    XDebug - http://192.168.220.1:5104
-
-### MySQL connection
-
-1. Get MySQL network info in a Docker container
-
-    ```shell
-    docker inspect datebase-container
-    ```
-
-1. Settings MySQL to Laravel
-
-   Edit ```src/.env``` file
-
-    ```text
-    DB_CONNECTION=mysql
-    DB_HOST=datebase-container
-    DB_PORT=3306
-    DB_DATABASE=laravel_project
-    DB_USERNAME=root
-    DB_PASSWORD=123456
-    ```
-
-1. Use MySQL in a Docker container
-
-    ```shell
-    docker-compose exec database bash -c 'mysql -u root -p 123456 laravel_project'
-    ```
-
-1. Run Laravel Migration to Docker container
-
-    ```shell
-    docker-compose exec laravel php artisan migrate
-    ```
-
-1. Clear database to Docker container
-
-    ```shell
-    docker-compose down --volumes --rmi all
-    docker-compose up -d --build
-    docker-compose exec laravel php artisan migrate
-    ```
-
-### Redis
-
-1. Settings Redis to Laravel
-
-    Edit ```src/.env``` file
-
-    ```text
-    REDIS_HOST=redis-container
-    REDIS_PASSWORD=null
-    REDIS_PORT=6379
-    ```
-
-1. Test Redis
-
-    ```shell
-    docker-compose exec laravel php artisan tinker
-    Illuminate\Support\Facades\Redis::set('name', 'hoge');
-    Illuminate\Support\Facades\Redis::get('name');
-    exit
-    ```
-
-1. Use Redis cli
-
-    ```shell
-    docker-compose exec redis redis-cli
-    ```
-
-### XDebug
-
-1. Change XDebug config for Mac or Windows
-
-    Change file ```docker/laravelxdebug.ini```
-
-    ```text
-    xdebug.remote_host=host.docker.internal 
-    ```
-    
-### Use UnitTest
-
-PHPUnit is used for unit testing. Unit tests ensure that class and methods does exactly what it is meant to do.
-
-General PHPUnit documentation can be found at https://phpunit.de/documentation.html.
-
-1. Add unit test Laravel application, db connection to Docker container
-
-   Create a new PHPUnit Test class ```DbConnectivityTest``` in folder ```src/tests/Feature```
-    
-    ```php
-    <?php
-    
-    namespace Tests\Feature;
-    
-    use Illuminate\Database\Connection;
-    use Tests\TestCase;
- 
-    class DbConnectivityTest extends TestCase
-    {
-        public function testDbConnectivity()
-        {
-            /** @var Connection $db */
-            $db = $this->app->make("db");
-            $row = $db->selectOne("SELECT 1 AS one");
-            $this->assertEquals(1, $row->one);
-        }
-    }
-    ```
-
-1. To run the PHPUnit unit tests, execute in a Docker container:
-
-    ```shell
-    docker-compose exec laravel ./vendor/bin/phpunit
-    ```
-
-### Create SSL cert
-
-1. Running OpenSSL command create ssl certs
-
-    ```shell
-    sudo openssl req -x509 -nodes -days 999999 -newkey rsa:2048 -keyout docker/laravel/nginx/cert/nginx.key -out docker/laravel/nginx/cert/nginx.crt
-    ```
-
-
-## Project managment
-
-### Git
-
-Please see [Git File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/git.md) for information.
-
-### Composer
-
-Please see [Composer File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/composer.md) for information.
-
-### NPM
-
-Please see [NPM File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/npm.md) for information.
-
-### PHPStan
-
-Please see [PHPStan File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpstan.md) for information.
-
-### PHPCPD
-
-Please see [PHPCPD File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpcpd.md) for information.
-
-### PHP CS Fixer
-
-Please see [PHP CS Fixer File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/php-fixer.md) for information.
-
-### PHPUnit
-
-Please see [PHPUnit File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpunit.md) for information.
-
-### XDebug
-
-Please see [Xdebug File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/xdebug.md) for information.
-
-### Docker
-
-Please see [Docker File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/docker.md) for information.
-
-### Laravel
-
-Please see [Laravel File](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/laravel.md) for information.
-
-Use command to Docker container: ```docker exec -it laravel-container <command>```
-
-
-## Donating
-
-You can support this project [here](https://www.paypal.me/cseliseev/10usd). 
-You can also help out by contributing to the project, or reporting bugs. 
-Even voicing your suggestions for features is great. Anything to help is much appreciated.
-
+   ```shell
+   docker logs <container_name>
+   ```
 
 ## License
 

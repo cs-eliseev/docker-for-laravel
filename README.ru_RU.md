@@ -9,35 +9,30 @@ DOCKER FOR LARAVEL
 
 ## Описание
 
-Создайте среду разработки Laravel, используя докер LEMP.
-Использует постоянное хранилище базы данных и стек PHP, MySQL, Redis, Nginx (http, https).
+Простая среда для проекта laravel, основанная на laradock.
+
 
 
 ## Информация
 
-### Ссылки проета
+### Внешние порты
 
-* Laravel приложение HTTP: http://localhost:5101
-* Laravel приложение HTTPS: http://localhost:5102
-* MySQL: http://localhost:5103
-* XDebug: http://192.168.220.1:5104
+* Приложение Laravel доступно: http://localhost
 
-### Путь к приложению Laravel
-
-```
-src/
-```
-
-### Логи хранятся
-
-```
-src/logs
-```
-
+|Сервис|Порт|
+|:---|:---:|
+|HTTP|80|
+|HTTPS|443|
+|Redis WebUI|6007|
+|Echo Server|7102|
+|Socket|7103|
+|XDebug|9003|
+|Swagger Editor|5151|
+|Swagger WebUI|5555|
 
 ## Использование
 
-### Установка
+### I - Установка
 
 #### Git
 
@@ -50,257 +45,170 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 
 [Скачать последнюю версию проекта можно здесь](https://github.com/cs-eliseev/docker-for-laravel/archive/master.zip).
 
-### Установка инструментов для разработки
+### II - Установка Docker
 
 * Установка [docker](https://docs.docker.com/engine/installation/)
 * Установка [docker-compose](https://docs.docker.com/compose/install/)
 
-### Создание проекта
+### III - Импорт зависимостей
 
-1. Создание нового Laravel проекта в Docker
+1. Импорт laradock
+
+   ```shell
+   git clone https://github.com/laradock/laradock.git docker
+   ```
+
+### VI - Импорт проекта на laravel
+
+1. Импорт примера проекта: laravel for docker
+
+   ```shell
+   git clone https://github.com/cs-eliseev/laravel-for-docker-example.git src
+   ```
+
+3. Создание нового Laravel проекта в Docker
 
     ```shell
     composer create-project --prefer-dist laravel/laravel src
     ```
 
-1. Добавление существующего Laravel проекта в Docker
+4. Добавление существующего Laravel проекта в Docker
 
     ```shell
     git clone <link> src
     ```
 
-### Развертывание проекта
 
-1. Перейти в папку с Laravel проектом
+## Пути
+
+1. Путь к Laravel проекту
+```
+./src
+```
+
+2. Путь к настройкам
+```
+.env
+```
+
+3. Путь к логам
+
+```
+./logs
+```
+
+
+4. Путь к контейнерам (laradock)
+
+```
+./dockers
+```
+
+5. Путь к настройкам контейнера
+
+```
+./configs
+```
+
+## Docker контейнеры
+
+|Сервис|Имя контейнера|
+|:---|:---:|
+|Application|laravel-workspace|
+|Nginx|laravel-nginx|
+|PHP-FPM|laravel-php-fpm|
+|Cron|laravel-cron|
+|Horizon|laravel-horizon|
+|Soketi|laravel-socket|
+|MySQL|laravel-mysql|
+|Mongo|laravel-mongo|
+|Redis|laravel-redis|
+|Memcached|laravel-memcached|
+|Laravel Echo Server|laravel-echo|
+|Redis WebUI|laravel-redis-ui|
+|Swagger WebUI|laravel-swagger-ui|
+|Swagger Editor|laravel-swagger-editor|
+
+## Настройки
+
+Все настройки доступны в файле: `.env`
+
+### Основные настройки:
+
+|Ключ|Описание|
+|:---|:---|
+|APP_NAME|Имя проекта|
+|PATH_DOCKER|Путь к файлам laradock|
+|PATH_CONFIGS|Путь к настройкам контейнеров|
+|PATH_LOGS|Путь к логам|
+|DATA_PATH_HOST|Путь к хранилищу контейнеров|
+|APP_CODE_PATH_HOST|Путь к приложению|
+|APP_CODE_PATH_CONTAINER|Путь к приложению внутри контейнера|
+|PHP_VERSION|Версия PHP|
+
+### Настройки портов:
+
+|Ключ|Описание|
+|:---|:---|
+|NGINX_HOST_HTTP_PORT|HTTP порт|
+|NGINX_HOST_HTTPS_PORT|HTTPS порт|
+|NGINX_PHP_UPSTREAM_PORT|Порт для проброса данных в Nginx|
+|MYSQL_PORT|Порт Mysql|
+|REDIS_PORT|Порт Redis|
+|MEMCACHED_HOST_PORT|Порт Memcached|
+|MONGODB_PORT|Порт MongoDB|
+|LARAVEL_ECHO_SERVER_PORT|Порт Laravel Echo Server|
+|SOKETI_PORT|Порт Soketi|
+|SOKETI_METRICS_SERVER_PORT|Порт вебинтерфейса Soketi|
+|SWAGGER_UI_PORT|Порт вебинтерфейса Swagger|
+|SWAGGER_EDITOR_PORT|Порт редактора Swagger|
+|REDIS_WEBUI_PORT|Порт вебинтерфейса Redis|
+|REDIS_WEBUI_CONNECT_PORT|Порт подключения вебинтерфейса Redis|
+|PHP_FPM_XDEBUG_PORT|Порт XDebug|
+
+## Команды управления контейнером
+
+1. Сборка контейнеров
+
+   ```shell
+   docker-composer up -d --build
+   ```
+
+2. Запуск контейнеров
+
+   ```shell
+   docker-composer start
+   ```
 
-    ```shell
-    cd src
-    ```
+3. Остановка контейнеров
 
-1. Установить через Composer зависимости Laravel
+   ```shell
+   docker-composer stop
+   ```
 
-    ```shell
-    composer require predis/predis
-    ```
+4. Список запущенных контейнеров
 
-1. Обновить Composer
+   ```shell
+   docker ps
+   ```
 
-    ```shell
-    composer update
-    ```
+5. Список всех контейнеров
 
-1. Установить через NPM зависимости Laravel
+   ```shell
+   docker ps -a
+   ```
+   
+6. Подключение к контейнеру приложения
 
-    ```shell
-    npm i
-    ```
+   ```shell
+   docker exec -it laravel-workspace bash
+   ```
 
-1. Добавить права в Laravel проект
+7. Логи докера
 
-    ```shell
-    sudo chmod 777 -R storage bootstrap/cache
-    ```
-
-1. Добавить группу в Laravel проект
-
-    ```shell
-    sudo chown -R 1000:1000 storage bootstrap/cache
-    ```
-
-1. Собрать Docker контейнеры
-
-    ```shell
-    docker-compose up --build
-    ```
-
-1. Сгенерировать ключ для Laravel приложения
-
-    ```shell
-    docker exec -it laravel-container php artisan key:generate
-    ```
-
-1. Использовать проект
-
-    HTTP - http://localhost:5101
-
-    HTTPS - https://localhost:5102
-    
-    XDebug - http://192.168.220.1:5104
-
-### Подключение MySQL
-
-1. Получить настройки сети MySQL в Docker контейнере
-
-    ```shell
-    docker inspect datebase-container
-    ```
-
-1. Установить конфигурацию для MySQL в Laravel
-
-   Отредактировать ```src/.env```
-
-    ```text
-    DB_CONNECTION=mysql
-    DB_HOST=datebase-container
-    DB_PORT=3306
-    DB_DATABASE=laravel_project
-    DB_USERNAME=root
-    DB_PASSWORD=123456
-    ```
-
-1. Использование MySQL в Docker контейнере
-
-    ```shell
-    docker-compose exec database bash -c 'mysql -u root -p 123456 laravel_project'
-    ```
-
-1. Запуск миграций баз данных в Docker контейнере
-
-    ```
-    docker-compose exec laravel php artisan migrate
-    ```
-
-1. Очистка базыданных Docker контейнере
-
-    ```
-    docker-compose down --volumes --rmi all
-    docker-compose up -d --build
-    docker-compose exec laravel php artisan migrate
-    ```
-
-### Redis
-
-1. Установить конфигурацию для Redis в Laravel
-
-    Отредактировать ```src/.env```
-
-    ```text
-    REDIS_HOST=redis-container
-    REDIS_PASSWORD=null
-    REDIS_PORT=6379
-    ```
-
-1. Проверка Redis
-
-    ```shell
-    docker-compose exec laravel php artisan tinker
-    Illuminate\Support\Facades\Redis::set('name', 'hoge');
-    Illuminate\Support\Facades\Redis::get('name');
-    exit
-    ```
-
-1. Использование клиента Redis
-
-    ```shell
-    docker-compose exec redis redis-cli
-    ```
-
-### XDebug
-
-1. Change XDebug config for Mac or Windows
-
-    Change file ```docker/laravelxdebug.ini```
-
-    ```text
-    xdebug.remote_host=host.docker.internal 
-    ```
-
-### Тестирование
-
-PHPUnit используется для модульного тестирования. Данные тесты гарантируют, что методы класса выполняют свою задачу.
-
-Подробную документацию по PHPUnit можно найти по адресу: https://phpunit.de/documentation.html.
-
-1. Добавьте тестовое приложение Laravel, подключение базы данных к контейнеру Docker
-
-   Создайте новый класс для unit тестов ```DbConnectivityTest``` в папке ```src/tests/Feature```
-    
-    ```php
-    <?php
-    
-    namespace Tests\Feature;
-    
-    use Illuminate\Database\Connection;
-    use Tests\TestCase;
- 
-    class DbConnectivityTest extends TestCase
-    {
-        public function testDbConnectivity()
-        {
-            /** @var Connection $db */
-            $db = $this->app->make("db");
-            $row = $db->selectOne("SELECT 1 AS one");
-            $this->assertEquals(1, $row->one);
-        }
-    }
-    ```
-
-1. Чтобы использовать настройки по умолчанию, достаточно выполнить в Docker контейнере
-
-    ```shell
-    docker-compose exec laravel ./vendor/bin/phpunit
-    ```
-
-### Создание SSL сертификатов
-
-1. Выполните команду OpenSSL для создания ssl-сертификата
-
-    ```shell
-    sudo openssl req -x509 -nodes -days 999999 -newkey rsa:2048 -keyout docker/laravel/nginx/cert/nginx.key -out docker/laravel/nginx/cert/nginx.crt
-    ```
-
-
-## Управление проектом
-
-### Git
-
-Для получения информации о работе с Git, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/git.md).
-
-### NPM
-
-Для получения информации о работе с NPM, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/npm.md).
-
-### Composer
-
-Для получения информации о работе с Composer, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/composer.md).
-
-### PHPStan
-
-Для получения информации о работе с PHPStan, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpstan.md).
-
-### PHPCPD
-
-Для получения информации о работе с PHPCPD, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpcpd.md).
-
-### PHP CS Fixer
-
-Для получения информации о работе с PHP CS Fixer, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/php-cs-fixer.md).
-
-### PHPUnit
-
-Для получения информации о работе с PHPUnit, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/phpunit.md).
-
-### XDebug
-
-Для получения информации о работе с Xdebug, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/xdebug.md).
-
-### Docker
-
-Для получения информации о работе с Docker, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/docker.md).
-
-### Laravel
-
-Для получения информации о работе с Laravel, ознакомьтесь с [файлом](https://github.com/cs-eliseev/docker-for-laravel/blob/master/info/laravel.md).
-
-Используйте команды в docker контейнере : ```docker exec -it laravel-container <command>```
-
-
-## Вклад в общее дело
-
-Вы можите поддержать данный проект [здесь](https://www.paypal.me/cseliseev/10usd). 
-Вы также можете помочь, внеся свой вклад в проект или сообщив об ошибках.
-Даже высказывать свои предложения по функциям - это здорово. Все, что поможет, высоко ценится.
-
+   ```shell
+   docker logs <container_name>
+   ```
 
 ## Лицензия
 

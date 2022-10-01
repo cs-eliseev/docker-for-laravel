@@ -350,18 +350,6 @@ services:
     networks:
       - backend
 
-  ### Soketi Server ##############################################
-  soketi:
-    container_name: ${APP_NAME}-soketi
-    build:
-      context: ${PATH_DOCKER}/soketi
-    ports:
-      - "${SOKETI_PORT}:6001"
-      - "${SOKETI_METRICS_SERVER_PORT}:9601"
-    networks:
-      - frontend
-      - backend
-
   ### NGINX Server #########################################
   nginx:
     container_name: ${APP_NAME}-nginx
@@ -384,6 +372,18 @@ services:
       - "${NGINX_HOST_HTTPS_PORT}:443"
     depends_on:
       - php-fpm
+    networks:
+      - frontend
+      - backend
+
+  ### Socket Server ##############################################
+  soketi:
+    container_name: ${APP_NAME}-socket
+    build:
+      context: ${PATH_DOCKER}/soketi
+    ports:
+      - "${SOKETI_PORT}:6001"
+      - "${SOKETI_METRICS_SERVER_PORT}:9601"
     networks:
       - frontend
       - backend
@@ -451,7 +451,7 @@ services:
 
   ### Laravel Echo Server #######################################
   laravel-echo-server:
-    container_name: ${APP_NAME}-laravel-echo-server
+    container_name: ${APP_NAME}-echo
     build:
       context: ${PATH_DOCKER}/laravel-echo-server
       args:
@@ -468,7 +468,7 @@ services:
 
   ### REDISWEBUI ################################################
   redis-webui:
-    container_name: ${APP_NAME}-redis-webui
+    container_name: ${APP_NAME}-redis-ui
     build:
       context: ${PATH_DOCKER}/redis-webui
     environment:
@@ -486,7 +486,7 @@ services:
 
   ### MongoWebUI ################################################
   mongo-webui:
-    container_name: ${APP_NAME}-mongo-webui
+    container_name: ${APP_NAME}-mongo-ui
     build:
       context: ${PATH_DOCKER}/mongo-webui
     environment:
@@ -502,15 +502,6 @@ services:
     depends_on:
       - mongo
 
-  ### SWAGGER EDITOR ############################################
-  swagger-editor:
-    container_name: ${APP_NAME}-swagger-editor
-    build: ${PATH_DOCKER}/swagger-editor
-    ports:
-      - ${SWAGGER_EDITOR_PORT}:8080
-    networks:
-      - backend
-
   ### SWAGGER UI ################################################
   swagger-ui:
     container_name: ${APP_NAME}-swagger-ui
@@ -519,5 +510,14 @@ services:
       - API_URL=${SWAGGER_API_URL}
     ports:
       - ${SWAGGER_UI_PORT}:8080
+    networks:
+      - backend
+
+  ### SWAGGER EDITOR ############################################
+  swagger-editor:
+    container_name: ${APP_NAME}-swagger-editor
+    build: ${PATH_DOCKER}/swagger-editor
+    ports:
+      - ${SWAGGER_EDITOR_PORT}:8080
     networks:
       - backend

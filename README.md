@@ -57,6 +57,8 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 
 ### VI - Import laravel project
 
+Laravel config example: `.env.example-for-laravel`
+
 1. Import example project: laravel for docker
 
    ```shell
@@ -75,7 +77,13 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
     git clone <link> src
     ```
 
-### V - BUILD
+### V - Add config
+
+   ```shell
+   cp .env.example .env
+   ```
+
+### VI - BUILD
 
    ```shell
    docker-composer up -d --build

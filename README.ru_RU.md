@@ -56,7 +56,7 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 1. Импорт laradock
 
    ```shell
-   git clone https://github.com/laradock/laradock.git docker
+   git clone https://github.com/laradock/laradock.git dockers
    ```
 
 ### VI - Импорт проекта на laravel

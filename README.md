@@ -11,9 +11,11 @@ DOCKER FOR LARAVEL
 
 Simple environment for laravel project, based on laradock.
 
-### External ports
+## Info
 
 * Laravel application: http://localhost
+
+### External ports
 
 |Service|Port|
 |:---|:---:|
@@ -89,7 +91,7 @@ Laravel config example: `.env.example-for-laravel`
    docker-composer up -d --build
    ```
 
-## Пути
+## Paths
 
 1. Laravel project path
 ```

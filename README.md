@@ -185,19 +185,19 @@ All settings in the file `.env`
 1. Build container
 
    ```shell
-   docker-composer up -d --build
+   docker-compose up -d --build
    ```
 
 2. Star containers
 
    ```shell
-   docker-composer start
+   docker-compose start
    ```
 
 3. Stop containers
 
    ```shell
-   docker-composer stop
+   docker-compose stop
    ```
 
 4. Show run containers

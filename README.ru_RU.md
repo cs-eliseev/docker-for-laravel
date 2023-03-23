@@ -187,19 +187,19 @@ git clone https://github.com/cs-eliseev/docker-for-laravel.git
 1. Сборка контейнеров
 
    ```shell
-   docker-composer up -d --build
+   docker-compose up -d --build
    ```
 
 2. Запуск контейнеров
 
    ```shell
-   docker-composer start
+   docker-compose start
    ```
 
 3. Остановка контейнеров
 
    ```shell
-   docker-composer stop
+   docker-compose stop
    ```
 
 4. Список запущенных контейнеров

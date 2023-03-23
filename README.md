@@ -88,7 +88,7 @@ Laravel config example: `.env.example-for-laravel`
 ### VI - BUILD
 
    ```shell
-   docker-composer up -d --build
+   docker-compose up -d --build
    ```
 
 ## Paths
